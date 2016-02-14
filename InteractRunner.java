@@ -8,6 +8,8 @@ public class InteractRunner
 		int first = 0, second = 0;
 		String response = "";
 		String sign = "-";
+		String answer = "";
+		Calculator calc = new Calculator();
 		while(!response.equalsIgnoreCase("yes"))
 		{
 			/* Computing */
@@ -17,21 +19,29 @@ public class InteractRunner
 			second = Integer.valueOf(reader.readLine());
 			System.out.println("Enter sign>>");
 			sign = reader.readLine();
-			System.out.println("Result = " + compute(first, second, sign));
-			System.out.println("Type yes for exit, type no for continue");
-			response = reader.readLine();
+			calc.compute(first, second, sign);
+			calc.setPrevResult(calc.getResult());
+			System.out.println("Result = " + calc.getResult());
+			System.out.println("Use previous value?");
+			answer = reader.readLine();
+			if(answer.equalsIgnoreCase("yes"))
+			{
+				System.out.println(calc.getPrevResult());
+				System.out.println("Enter sign>>");
+				sign = reader.readLine();
+				System.out.println("Enter second number>>");
+				second = Integer.parseInt(reader.readLine());
+				calc.compute(calc.getPrevResult(), second, sign);
+				System.out.println("Result = " + calc.getResult());
+				calc.cleanResult();
+			}
+			else {
+				System.out.println("Type yes for exit, type no for continue");
+				calc.cleanResult();
+				response = reader.readLine();
+			}
+			
 		}
 		
-	}
-	
-	public static int compute(int first, int second, String sing)
-	{
-		Calculator calc = new Calculator();
-		if(sing.equalsIgnoreCase("+")) calc.add(first, second);
-		else if(sing.equalsIgnoreCase("-")) calc.substract(first, second);
-		else if(sing.equalsIgnoreCase("*")) calc.multiply(first, second);
-		else if(sing.equalsIgnoreCase("/")) calc.divide(first, second);
-		
-		return calc.getResult();
 	}
 }
