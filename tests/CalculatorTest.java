@@ -6,8 +6,10 @@ import src.calculator.Calculator;
 
 public class CalculatorTest {
 
-    private Calculator  calc = new Calculator();
+    private Calculator  calc = new Calculator();  //Create a instance of Calculator class
 
+
+    //Testing of add two values
     @Test
     public void addTest()
     {
@@ -19,6 +21,7 @@ public class CalculatorTest {
         calc.cleanResult();
     }
 
+    //Testing of substract two values
     @Test
     public void substractTest()
     {
@@ -26,6 +29,7 @@ public class CalculatorTest {
         Assert.assertEquals(1,calc.getResult());
     }
 
+    //Testing of multiply two values
     @Test
     public void multiplyTest()
     {
@@ -33,6 +37,7 @@ public class CalculatorTest {
         Assert.assertEquals(1000000,calc.getResult());
     }
 
+    //Testing of divide two values
     @Test
     public void divideTest()
     {
@@ -40,6 +45,7 @@ public class CalculatorTest {
         Assert.assertEquals(25,calc.getResult());
     }
 
+    //Testing of power for two values
     @Test
     public void powTest()
     {
