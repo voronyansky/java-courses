@@ -1,4 +1,4 @@
-import java.lang.Math;
+package src.calculator;
 
 public class Calculator
 {
@@ -10,11 +10,16 @@ public class Calculator
 	
 	public void compute(int first, int second, String sing)
 	{
-		if(sing.equalsIgnoreCase("+")) add(first, second);
-		else if(sing.equalsIgnoreCase("-")) substract(first, second);
-		else if(sing.equalsIgnoreCase("*")) multiply(first, second);
-		else if(sing.equalsIgnoreCase("/")) divide(first, second);
-		//this.prevResult = result;
+		if(sing.equalsIgnoreCase("+"))
+			add(first, second);
+		else if(sing.equalsIgnoreCase("-"))
+			substract(first, second);
+		else if(sing.equalsIgnoreCase("*"))
+			multiply(first, second);
+		else if(sing.equalsIgnoreCase("/"))
+			divide(first, second);
+        else if(sing.equalsIgnoreCase("^"))
+            pow(first,second);
 	}
 	/*
 	* @param 
@@ -41,7 +46,14 @@ public class Calculator
 	*/
 	private void divide(int first, int second)
 	{
-		this.result = first/second;
+        try {
+		    this.result = first/second;
+        }
+        catch(ArithmeticException exp)
+        {
+            this.result = 0;
+            System.out.println("На ноль делить нельзя!");
+        }
 	}
 	
 	/*
@@ -70,11 +82,18 @@ public class Calculator
 		return this.result;
 	}
 	
+	/*
+	* @param - int value - it is value to set prevResult variable
+	*/
+	
 	public void setPrevResult(int value)
 	{
 		this.prevResult = value;
 	}
 	
+	/*
+	* @return value of prevResult variable
+	*/
 	public int getPrevResult()
 	{
 		return this.prevResult;

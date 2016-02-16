@@ -1,4 +1,4 @@
-import java.lang.Math;
+package src.calculator;
 
 public class Calculate
 {
