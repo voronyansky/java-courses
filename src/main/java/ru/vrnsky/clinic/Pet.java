@@ -1,4 +1,4 @@
-package src.calculator;
+package ru.vrnsky.clinic;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,5 +12,4 @@ public interface Pet {
     void setName(String str);
     void someNoise();
     boolean isHungry();
-
 }

@@ -1,4 +1,4 @@
-package src.calculator;
+package ru.vrnsky.clinic;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
  * User: Egor
  * Date: 26.02.16
  * Time: 15:12
- * To change this template use File | Settings | File Templates.
+ * This is user menu of pet clinic
  */
 public class ClinicRunner {
 
@@ -29,7 +29,7 @@ public class ClinicRunner {
             System.out.println();
             clinic.getTableClinic();
             System.out.println("====================DATABASE UPDATE=======================");
-            Thread.sleep(1500);
+            Thread.sleep(3000);
 
 
         }

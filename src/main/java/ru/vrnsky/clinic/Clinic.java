@@ -1,4 +1,4 @@
-package src.calculator;
+package ru.vrnsky.clinic;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,18 +34,18 @@ public class Clinic {
         {
             for(int i=0;i<clients.length;i++)
             {
-              if(clients[i] != null)
-              {
-                  if(clients[i].getPet() != null)
-                  {
-                     str = i + "\t" + clients[i].getName() + "\t" + clients[i].getPet().getName();
-                  }
-                  else
-                  {
-                      str = i + "\t" + clients[i].getName() + "\t" + "no pet yet";
-                  }
-                  System.out.println(str);
-              }
+                if(clients[i] != null)
+                {
+                    if(clients[i].getPet() != null)
+                    {
+                        str = i + "\t" + clients[i].getName() + "\t" + clients[i].getPet().getName();
+                    }
+                    else
+                    {
+                        str = i + "\t" + clients[i].getName() + "\t" + "no pet yet";
+                    }
+                    System.out.println(str);
+                }
 
             }
         }
@@ -63,13 +63,13 @@ public class Clinic {
      */
     public Client getClientById(int id)
     {
-      Client client = null;
-      if(id >= 0 && id < clients.length)
-        client = clients[id];
-      else
-        client = null;
+        Client client = null;
+        if(id >= 0 && id < clients.length)
+            client = clients[id];
+        else
+            client = null;
 
-      return client;
+        return client;
     }
 
 
@@ -105,20 +105,20 @@ public class Clinic {
         Client client = null;
         for(int i=0;i<clients.length;i++)
         {
-          client = clients[i];
-          //Check for client not null
-          if(client != null)
-          {
-              if(client.getPet() != null)
-              {
-                  //Search client with pet which name is petName and type result in the console
-                  if(client.getPet().getName().equalsIgnoreCase(petName))
-                  {
-                      System.out.println("Client with name " + client.getName() + "have a pet with name: " + petName);
-                  }
+            client = clients[i];
+            //Check for client not null
+            if(client != null)
+            {
+                if(client.getPet() != null)
+                {
+                    //Search client with pet which name is petName and type result in the console
+                    if(client.getPet().getName().equalsIgnoreCase(petName))
+                    {
+                        System.out.println("Client with name " + client.getName() + "have a pet with name: " + petName);
+                    }
 
-              }
-          }
+                }
+            }
         }
     }
 
@@ -277,10 +277,4 @@ public class Clinic {
 
         return data;
     }
-
-
-
-
-
-
 }

@@ -1,4 +1,4 @@
-package src.calculator;
+package ru.vrnsky.clinic;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,7 +49,7 @@ public class Cat implements Pet {
      */
     @Override
     public void someNoise() {
-       System.out.println(NOISE);
+        System.out.println(NOISE);
     }
 
     /*

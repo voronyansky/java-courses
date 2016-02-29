@@ -1,4 +1,4 @@
-package src.calculator;
+package ru.vrnsky.clinic;
 
 /**
  * Created with IntelliJ IDEA.
