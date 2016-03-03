@@ -16,15 +16,20 @@ public class Clinic {
     private Client[] clients; //In this array hold all clients
     private BufferedReader reader; //Need for reading data from console
 
-    /*
-        Constructor for this class
-        @param: int client - amont of all client
+
+    /**
+     * This is constructor for this class
+     * @param client - count of all clients
      */
     public Clinic(int client)
     {
         clients = new Client[client];
     }
 
+    /**
+     * This method type out in console table view
+     * of clinic
+     */
     public void getTableClinic()
     {
         //StringBuilder stringBuilder = new StringBuilder();
@@ -56,47 +61,19 @@ public class Clinic {
     }
 
 
-
-    /*
-        @param: int id - id client, number is array clients
-        @return Client instance at id position
+    /**
+     *
+     * @param id - number of our client in array clients
+     * @return Client instance at id position
+     * @throws UserException if id > 0 && clients.length
      */
-    public Client getClientById(int id)
-    {
-        Client client = null;
-        if(id >= 0 && id < clients.length)
-            client = clients[id];
-        else
-            client = null;
-
-        return client;
+    public Client getClientById(int id) throws UserException {
+       if(id < 0 || id > clients.length) throw new UserException("Client not exist");
+        return clients[id];
     }
 
-
-    /*
-       This method search client is clients array
-       by name of client
-       @param void
-       @return void
-     */
-    public void findClientByName()
-    {
-        System.out.println("Enter a name for search client(s)");
-        String clientName = getDataFromConsole();     //Reading from console
-        Client client = null;
-        for(int i=0;i<clients.length;i++)
-        {
-            client = clients[i];
-            //Search client with name and type it in console
-            if(client != null && client.getName().equalsIgnoreCase(clientName))
-                System.out.println(i + " " + client.getName());
-        }
-    }
-
-    /*
-        Search client by pet name
-        @param: void
-        @return: void
+    /**
+     * Search client by his pet name
      */
     public void findClientByPetName()
     {
@@ -122,14 +99,36 @@ public class Clinic {
         }
     }
 
-    /*
-        Edit the name of client
-        @param: int id - id client in clients array
-        @return:void
+    /**
+     *  This method search client is clients array
+     *  by name of client
+     */
+    public void findClientByName()
+    {
+        System.out.println("Enter a name for search client(s)");
+        String clientName = getDataFromConsole();     //Reading from console
+        Client client = null;
+        for(int i=0;i<clients.length;i++)
+        {
+            client = clients[i];
+            //Search client with name and type it in console
+            if(client != null && client.getName().equalsIgnoreCase(clientName))
+                System.out.println(i + " " + client.getName());
+        }
+    }
+
+    /**
+     * This method for edit client name
+     * @param clientId - number of client in array
      */
     public void editClientName(int clientId)
     {
-        Client client = getClientById(clientId);
+        Client client = null;
+        try {
+            client = getClientById(clientId);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         if(client == null) System.out.println("Client not found");
         System.out.println("Old client name: " + client.getName());
         System.out.println("Enter new client name");
@@ -137,11 +136,8 @@ public class Clinic {
         client.setName(name);
     }
 
-    /*
-       @param:void
-       @return:void
-       This method create new instance of Client class with
-       name and push it to the clients array
+    /**
+     * This method adding client to clients array
      */
     public void addClient()
     {
@@ -160,16 +156,19 @@ public class Clinic {
         }
     }
 
-    /*
-       It method add pet to client instance
-       @param: int clientId - number of client in clients array
-       @return: void
+    /**
+     * This method add pet to the client
+     * @param clientId - number in clients array
      */
     public void addClientsPet(int clientId)
     {
-        Client client = getClientById(clientId);
+        Client client = null;
         Pet pet = null;
-        if(client == null) return;
+        try {
+            client = getClientById(clientId);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         System.out.println("Type god for add god and type cat for add cat");
         String typePet = getDataFromConsole();
         if(typePet.equalsIgnoreCase("cat"))
@@ -188,10 +187,9 @@ public class Clinic {
     }
 
 
-    /*
-        Delete client from our array of client
-        @param: int clientId - number of client in our clients array
-        @return: void
+    /**
+     * This method remove client in array by his id
+     * @param clientId
      */
     public void removeClient(int clientId)
     {
@@ -206,24 +204,28 @@ public class Clinic {
         }
     }
 
-    /*
-      Getter for client pet
-      @param: int clientId - number of client in clients array
-      @return Pet instance of client pet
+    /**
+     *
+     * @param clientId - id client in array
+     * @return Pet instance of client
      */
     public Pet getClientsPet(int clientId)
     {
         return clients[clientId].getPet();
     }
 
-    /*
-        Edit client pet name
-        @param: int clientId - id client in clients array
-        @return: void
+    /**
+     * This method edit clients pet name
+     * @param clientId - number of client in clients array
      */
     public void editClientPetName(int clientId)
     {
-        Client client = getClientById(clientId);
+        Client client = null;
+        try {
+            client = getClientById(clientId);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         if(client != null)
         {
             System.out.println(client.getName() +  " have pet with name " + client.getPet().getName());
@@ -236,10 +238,9 @@ public class Clinic {
         }
     }
 
-    /*
-        Delete pet from client
-        @param:int clientId - number of client in our clients array
-        @return: void
+    /**
+     * This method remove pet in the client instance
+     * @param clientId - number of client in clients array
      */
     public void removeClientPet(int clientId)
     {
@@ -256,11 +257,10 @@ public class Clinic {
         }
     }
 
-    /*
-        @param:void
-        @return: String data
-        This method read data from console and handled all exception
-        and return String from console
+
+    /**
+     * This method reading data from console
+     * @return data readed from console
      */
     private String getDataFromConsole()
     {

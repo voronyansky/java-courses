@@ -10,6 +10,7 @@ import org.junit.Test;
  * Time: 15:19
  * This test class for test dog class
  */
+//TODO write docs
 public class DogTest extends TestCase {
 
     private Dog dog = new Dog("Argus");

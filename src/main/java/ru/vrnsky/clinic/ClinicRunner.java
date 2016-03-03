@@ -37,6 +37,9 @@ public class ClinicRunner {
 
     }
 
+    /**
+     * This method type out at the console all users command
+     */
     public static void guessUser()
     {
         System.out.println("Clinic command. Type number of command for execute");
@@ -53,8 +56,15 @@ public class ClinicRunner {
         System.out.println("11.Exit");
     }
 
-    public static void executeCommand(Clinic clinic, int command,int id)
+    /**
+     *
+     * @param clinic - instance of clinic class
+     * @param command - number of command
+     * @param id - id of clients for execute command
+     */
+    public static void executeCommand(Clinic clinic, int command,int id) throws IllegalArgumentException
     {
+        if(command < 0 && command > 11) throw new IllegalArgumentException("Command start from 1 to 11");
         switch(command)
         {
             case 1:

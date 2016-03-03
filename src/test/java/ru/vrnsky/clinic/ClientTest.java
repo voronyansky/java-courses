@@ -10,6 +10,7 @@ import org.junit.Test;
  * Time: 14:41
  * This is test of client
  */
+//TODO write docs
 public class ClientTest extends TestCase {
 
     private Client client = new Client("Google");
