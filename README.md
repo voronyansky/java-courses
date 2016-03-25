@@ -8,8 +8,8 @@ Most important features at this system:
 4.Find client by name");
 5.Find client by pet name");
 6.Edit client name");
-7.Edit client\'s pet name");
-8.Remove client\'s pet");
+7.Edit client pet name");
+8.Remove client pet");
 9.Remove client
 
 Interact with system carried in console. After execute each command in console will be type table view
