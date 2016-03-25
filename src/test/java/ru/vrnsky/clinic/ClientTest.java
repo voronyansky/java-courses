@@ -15,6 +15,12 @@ public class ClientTest extends TestCase {
 
     private Client client = new Client("Google");
 
+    @Test(expected=UserException.class)
+    public void testBadClient()
+    {
+        Client client = new Client("");
+    }
+
     @Test
     public void testGetName() throws Exception {
         assertEquals("Google", client.getName());

@@ -1,5 +1,8 @@
 package ru.vrnsky.clinic;
 
+import ru.vrnsky.io.Input;
+import ru.vrnsky.io.Output;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -12,25 +15,26 @@ import java.io.InputStreamReader;
  */
 public class ClinicRunner {
 
+    private static final Input input = new Input();
+    private static final Output output = new Output();
+
     public static void main(String[] args) throws Exception
     {
         Clinic clinic = new Clinic(10);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String answer = "";
+
         while(true)
         {
             guessUser();
-            int command = Integer.parseInt(reader.readLine());
+            int command = Integer.parseInt(input.getString());
             System.out.println("If you want work with existing client type id of client.\nOtherwise type -1");
-            int id = Integer.parseInt(reader.readLine());
+            int id = Integer.parseInt(input.getString());
             executeCommand(clinic,command,id);
-            System.out.println();
-            System.out.println("====================DATABASE UPDATE=======================");
-            System.out.println();
+            output.sayUser("");
+            output.sayUser("====================DATABASE UPDATE=======================");
+            output.sayUser("");
             clinic.getTableClinic();
-            System.out.println("====================DATABASE UPDATE=======================");
+            output.sayUser("====================DATABASE UPDATE=======================");
             Thread.sleep(3000);
-
 
         }
 
@@ -42,18 +46,18 @@ public class ClinicRunner {
      */
     public static void guessUser()
     {
-        System.out.println("Clinic command. Type number of command for execute");
-        System.out.println("1.Add new client");
-        System.out.println("2.Remove client");
-        System.out.println("3.Set pet of existing client");
-        System.out.println("4.Find client by name");
-        System.out.println("5.Find client by pet name");
-        System.out.println("6.Edit client name");
-        System.out.println("7.Edit client\'s pet name");
-        System.out.println("8.Remove client\'s pet");
-        System.out.println("9.Remove client");
-        System.out.println("10.Get table clinic");
-        System.out.println("11.Exit");
+        output.sayUser("Clinic command. Type number of command for execute");
+        output.sayUser("0.LIST");
+        output.sayUser("1.Add new client");
+        output.sayUser("2.Remove client");
+        output.sayUser("3.Set pet of existing client");
+        output.sayUser("4.Find client by name");
+        output.sayUser("5.Find client by pet name");
+        output.sayUser("6.Edit client name");
+        output.sayUser("7.Edit client\'s pet name");
+        output.sayUser("8.Remove client\'s pet");
+        output.sayUser("9.Remove client");
+        output.sayUser("10.Exit");
     }
 
     /**
@@ -62,11 +66,13 @@ public class ClinicRunner {
      * @param command - number of command
      * @param id - id of clients for execute command
      */
-    public static void executeCommand(Clinic clinic, int command,int id) throws IllegalArgumentException
+    public static void executeCommand(Clinic clinic, int command,int id) throws Exception
     {
-        if(command < 0 && command > 11) throw new IllegalArgumentException("Command start from 1 to 11");
+        if(command < 0 && command > 11) throw new IllegalArgumentException("Command must start from 0 to 10");
         switch(command)
         {
+            case 0:
+                clinic.getTableClinic();
             case 1:
                 clinic.addClient();
                 break;
@@ -95,11 +101,9 @@ public class ClinicRunner {
                 clinic.removeClient(id);
                 break;
             case 10:
-                clinic.getTableClinic();
-                break;
-            case 11:
                 System.exit(0);
                 break;
+
         }
     }
 

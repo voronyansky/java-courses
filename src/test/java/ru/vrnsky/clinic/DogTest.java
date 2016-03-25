@@ -15,6 +15,7 @@ public class DogTest extends TestCase {
 
     private Dog dog = new Dog("Argus");
 
+
     @Test
     public void testSetName() throws Exception {
         dog.setName("Harding");

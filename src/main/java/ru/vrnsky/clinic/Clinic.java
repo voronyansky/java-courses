@@ -1,5 +1,8 @@
 package ru.vrnsky.clinic;
 
+import ru.vrnsky.io.Input;
+import ru.vrnsky.io.Output;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -14,7 +17,8 @@ import java.util.List;
 public class Clinic {
 
     private Client[] clients; //In this array hold all clients
-    private BufferedReader reader; //Need for reading data from console
+    private Output output = new Output();
+    private Input input = new Input();
 
 
     /**
@@ -33,8 +37,8 @@ public class Clinic {
     public void getTableClinic()
     {
         //StringBuilder stringBuilder = new StringBuilder();
-        String str = "";
-        System.out.println("id\tName\tPet");
+        String str;
+        output.sayUser("id\tName\tPet");
         if(clients != null)
         {
             for(int i=0;i<clients.length;i++)
@@ -49,14 +53,14 @@ public class Clinic {
                     {
                         str = i + "\t" + clients[i].getName() + "\t" + "no pet yet";
                     }
-                    System.out.println(str);
+                    output.sayUser(str);
                 }
 
             }
         }
         else
         {
-            System.out.println("Clinic is empty. Please add new client");
+            output.sayUser("Clinic is empty. Please add new client");
         }
     }
 
@@ -77,9 +81,9 @@ public class Clinic {
      */
     public void findClientByPetName()
     {
-        System.out.println("Enter a name of pet for search");
-        String petName = getDataFromConsole();
-        Client client = null;
+        output.sayUser("Enter a name of pet for search");
+        String petName = input.getString();
+        Client client;
         for(int i=0;i<clients.length;i++)
         {
             client = clients[i];
@@ -91,9 +95,13 @@ public class Clinic {
                     //Search client with pet which name is petName and type result in the console
                     if(client.getPet().getName().equalsIgnoreCase(petName))
                     {
-                        System.out.println("Client with name " + client.getName() + "have a pet with name: " + petName);
+                        output.sayUser("Client with name " + client.getName() + "have a pet with name: " + petName);
                     }
 
+                }
+                else
+                {
+                    output.sayUser("Client with name " + client.getName() + " not have pet");
                 }
             }
         }
@@ -105,15 +113,15 @@ public class Clinic {
      */
     public void findClientByName()
     {
-        System.out.println("Enter a name for search client(s)");
-        String clientName = getDataFromConsole();     //Reading from console
-        Client client = null;
+        output.sayUser("Enter a name for search client(s)");
+        String clientName = input.getString();  //Reading from console
+        Client client;
         for(int i=0;i<clients.length;i++)
         {
             client = clients[i];
             //Search client with name and type it in console
             if(client != null && client.getName().equalsIgnoreCase(clientName))
-                System.out.println(i + " " + client.getName());
+                output.sayUser(i + " " + client.getName());
         }
     }
 
@@ -121,7 +129,7 @@ public class Clinic {
      * This method for edit client name
      * @param clientId - number of client in array
      */
-    public void editClientName(int clientId)
+    public void editClientName(int clientId) throws UserException
     {
         Client client = null;
         try {
@@ -129,28 +137,28 @@ public class Clinic {
         } catch (UserException e) {
             e.printStackTrace();
         }
-        if(client == null) System.out.println("Client not found");
-        System.out.println("Old client name: " + client.getName());
-        System.out.println("Enter new client name");
-        String name = getDataFromConsole();
+        if(client == null) output.sayUser("Client not found");
+        output.sayUser("Old client name: " + client.getName());
+        output.sayUser("Enter new client name");
+        String name = input.getString();
+        if(name.isEmpty()) throw new UserException("User must have not empty name");
         client.setName(name);
     }
 
     /**
      * This method adding client to clients array
      */
-    public void addClient()
+    public void addClient() throws UserException
     {
-        System.out.println("Enter a name of client");
-        String name = getDataFromConsole();
+        output.sayUser("Enter a name of client");
+        String name = input.getString();
+        if(name.isEmpty()) throw new UserException("User must have name");
         Client client = new Client(name);
-        int id=0;
         for(int i=0;i<clients.length;i++)
         {
             if(clients[i] == null)
             {
                 clients[i] = client;
-                id = i;
                 break;
             }
         }
@@ -160,7 +168,7 @@ public class Clinic {
      * This method add pet to the client
      * @param clientId - number in clients array
      */
-    public void addClientsPet(int clientId)
+    public void addClientsPet(int clientId) throws UserException
     {
         Client client = null;
         Pet pet = null;
@@ -169,18 +177,19 @@ public class Clinic {
         } catch (UserException e) {
             e.printStackTrace();
         }
-        System.out.println("Type god for add god and type cat for add cat");
-        String typePet = getDataFromConsole();
+        output.sayUser("Type god for add god and type cat for add cat");
+        String typePet = input.getString();
         if(typePet.equalsIgnoreCase("cat"))
         {
-            System.out.println("Type a name of your cat");
-            pet = new Cat(getDataFromConsole());
+            output.sayUser("Type a name of your cat");
+            pet = new Cat(input.getString());
         }
         else if (typePet.equalsIgnoreCase("dog"))
         {
-            System.out.println("Type a name of your dog");
-            pet = new Dog(getDataFromConsole());
+            output.sayUser("Type a name of your dog");
+            pet = new Dog(input.getString());
         }
+        else if(typePet.isEmpty()) throw new UserException("Field dog/cat may not empty");
 
         client.setPet(pet);
 
@@ -200,7 +209,7 @@ public class Clinic {
         else
         {
             clients[clientId] = null;
-            System.out.println("Client deleted");
+            output.sayUser("Client deleted");
         }
     }
 
@@ -228,9 +237,9 @@ public class Clinic {
         }
         if(client != null)
         {
-            System.out.println(client.getName() +  " have pet with name " + client.getPet().getName());
-            System.out.println("Type new name for this pet");
-            client.getPet().setName(getDataFromConsole());
+            output.sayUser(client.getName() +  " have pet with name " + client.getPet().getName());
+            output.sayUser("Type new name for this pet");
+            client.getPet().setName(input.getString());
         }
         else
         {
@@ -246,35 +255,16 @@ public class Clinic {
     {
         if(clientId < 0 && clientId > clients.length)
         {
-            System.out.println("Client not exist");
+            output.sayUser("Client does not exist");
         }
         else
         {
             Client client = clients[clientId];
             client.setPet(null);
-            System.out.println("Pet deleted");
+            output.sayUser("Pet was deleted");
 
         }
     }
 
 
-    /**
-     * This method reading data from console
-     * @return data readed from console
-     */
-    private String getDataFromConsole()
-    {
-        reader = new BufferedReader(new InputStreamReader(System.in));
-        String data = "";
-        try
-        {
-            data = reader.readLine();
-        }
-        catch (Exception exp)
-        {
-            System.out.println(exp.getMessage());
-        }
-
-        return data;
-    }
 }
