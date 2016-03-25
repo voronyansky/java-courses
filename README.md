@@ -1,16 +1,17 @@
 # java-courses
+------------------------ Clinic System
 This is system for pet clinic.
 Most important features at this system:
-0.Get table view of clinic client and their pets
-1.Add new client
-2.Remove client
-3.Set pet of existing client");
-4.Find client by name");
-5.Find client by pet name");
-6.Edit client name");
-7.Edit client\'s pet name");
-8.Remove client\'s pet");
-9.Remove client
+-0.Get table view of clinic client and their pets
+-1.Add new client
+-2.Remove client
+-3.Set pet of existing client");
+-4.Find client by name");
+-5.Find client by pet name");
+-6.Edit client name");
+-7.Edit client\'s pet name");
+-8.Remove client\'s pet");
+-9.Remove client
 
 Interact with system carried in console. After execute each command in console will be type table view
 of client with their pet. In system exist two type of pet. It is a dog and a cat. Both types have name
