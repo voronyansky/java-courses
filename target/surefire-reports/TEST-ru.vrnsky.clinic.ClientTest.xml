@@ -65,7 +65,7 @@
   </properties>
   <testcase classname="ru.vrnsky.clinic.ClientTest" name="testGetName" time="0"/>
   <testcase classname="ru.vrnsky.clinic.ClientTest" name="testSetName" time="0"/>
+  <testcase classname="ru.vrnsky.clinic.ClientTest" name="testSetPet" time="0"/>
   <testcase classname="ru.vrnsky.clinic.ClientTest" name="testGetPet" time="0"/>
   <testcase classname="ru.vrnsky.clinic.ClientTest" name="testBadClient" time="0"/>
-  <testcase classname="ru.vrnsky.clinic.ClientTest" name="testSetPet" time="0"/>
 </testsuite>

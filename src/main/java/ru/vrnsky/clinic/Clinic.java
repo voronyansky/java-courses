@@ -3,10 +3,6 @@ package ru.vrnsky.clinic;
 import ru.vrnsky.io.Input;
 import ru.vrnsky.io.Output;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,12 +63,14 @@ public class Clinic {
 
     /**
      *
-     * @param id - number of our client in array clients
      * @return Client instance at id position
      * @throws UserException if id > 0 && clients.length
      */
-    public Client getClientById(int id) throws UserException {
-       if(id < 0 || id > clients.length) throw new UserException("Client not exist");
+    public Client getClientById() throws UserException {
+
+        output.sayUser("Type id of client");
+        int id = input.getInt();
+        if(id < 0 || id > clients.length) throw new UserException("Id out of range");
         return clients[id];
     }
 
@@ -127,17 +125,17 @@ public class Clinic {
 
     /**
      * This method for edit client name
-     * @param clientId - number of client in array
+     * @throws UserException if client does not exist or user try to assign client empty string for name
      */
-    public void editClientName(int clientId) throws UserException
+    public void editClientName() throws UserException
     {
         Client client = null;
         try {
-            client = getClientById(clientId);
+            client = getClientById();
         } catch (UserException e) {
             e.printStackTrace();
         }
-        if(client == null) output.sayUser("Client not found");
+        if(client == null) { output.sayUser("Client not found"); return; }
         output.sayUser("Old client name: " + client.getName());
         output.sayUser("Enter new client name");
         String name = input.getString();
@@ -147,6 +145,7 @@ public class Clinic {
 
     /**
      * This method adding client to clients array
+     * @throws UserException - if name of client is empty
      */
     public void addClient() throws UserException
     {
@@ -165,15 +164,15 @@ public class Clinic {
     }
 
     /**
-     * This method add pet to the client
-     * @param clientId - number in clients array
+     * This method attach pet to instance of client
+     * @throws UserException
      */
-    public void addClientsPet(int clientId) throws UserException
+    public void addClientsPet() throws UserException
     {
         Client client = null;
         Pet pet = null;
         try {
-            client = getClientById(clientId);
+            client = getClientById();
         } catch (UserException e) {
             e.printStackTrace();
         }
@@ -191,26 +190,22 @@ public class Clinic {
         }
         else if(typePet.isEmpty()) throw new UserException("Field dog/cat may not empty");
 
-        client.setPet(pet);
+        client.setPet(pet); //TODO fix, this string may throw NullPointerException
 
     }
 
 
     /**
      * This method remove client in array by his id
-     * @param clientId
+     * @throws UserException
      */
-    public void removeClient(int clientId)
+    public void removeClient() throws UserException
     {
-        if(clientId < 0 && clientId < clients.length)
-        {
-            System.out.println("Client not exist");
-        }
-        else
-        {
-            clients[clientId] = null;
-            output.sayUser("Client deleted");
-        }
+        getTableClinic();
+        output.sayUser("Type id of client which you would to delete");
+        int id = input.getInt();
+        if(id < 0 || id > clients.length) throw new UserException("Id out of range");
+        clients[id] = null;
     }
 
     /**
@@ -225,13 +220,13 @@ public class Clinic {
 
     /**
      * This method edit clients pet name
-     * @param clientId - number of client in clients array
+     *
      */
-    public void editClientPetName(int clientId)
+    public void editClientPetName()
     {
         Client client = null;
         try {
-            client = getClientById(clientId);
+            client = getClientById();
         } catch (UserException e) {
             e.printStackTrace();
         }
@@ -249,21 +244,13 @@ public class Clinic {
 
     /**
      * This method remove pet in the client instance
-     * @param clientId - number of client in clients array
+     *
      */
-    public void removeClientPet(int clientId)
-    {
-        if(clientId < 0 && clientId > clients.length)
-        {
-            output.sayUser("Client does not exist");
-        }
-        else
-        {
-            Client client = clients[clientId];
-            client.setPet(null);
-            output.sayUser("Pet was deleted");
+    public void removeClientPet() throws UserException {
 
-        }
+        Client client = getClientById();
+        client.setPet(null);
+
     }
 
 

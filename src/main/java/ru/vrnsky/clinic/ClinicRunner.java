@@ -26,9 +26,7 @@ public class ClinicRunner {
         {
             guessUser();
             int command = Integer.parseInt(input.getString());
-            System.out.println("If you want work with existing client type id of client.\nOtherwise type -1");
-            int id = Integer.parseInt(input.getString());
-            executeCommand(clinic,command,id);
+            executeCommand(clinic,command);
             output.sayUser("");
             output.sayUser("====================DATABASE UPDATE=======================");
             output.sayUser("");
@@ -56,17 +54,15 @@ public class ClinicRunner {
         output.sayUser("6.Edit client name");
         output.sayUser("7.Edit client\'s pet name");
         output.sayUser("8.Remove client\'s pet");
-        output.sayUser("9.Remove client");
-        output.sayUser("10.Exit");
+        output.sayUser("9.Exit");
     }
 
     /**
      *
      * @param clinic - instance of clinic class
      * @param command - number of command
-     * @param id - id of clients for execute command
      */
-    public static void executeCommand(Clinic clinic, int command,int id) throws Exception
+    public static void executeCommand(Clinic clinic, int command) throws Exception
     {
         if(command < 0 && command > 11) throw new IllegalArgumentException("Command must start from 0 to 10");
         switch(command)
@@ -77,10 +73,10 @@ public class ClinicRunner {
                 clinic.addClient();
                 break;
             case 2:
-                clinic.removeClient(id);
+                clinic.removeClient();
                 break;
             case 3:
-                clinic.addClientsPet(id);
+                clinic.addClientsPet();
                 break;
             case 4:
                 clinic.findClientByName();
@@ -89,18 +85,15 @@ public class ClinicRunner {
                 clinic.findClientByPetName();
                 break;
             case 6:
-                clinic.editClientName(id);
+                clinic.editClientName();
                 break;
             case 7:
-                clinic.editClientPetName(id);
+                clinic.editClientPetName();
                 break;
             case 8:
-                clinic.removeClientPet(id);
+                clinic.removeClientPet();
                 break;
             case 9:
-                clinic.removeClient(id);
-                break;
-            case 10:
                 System.exit(0);
                 break;
 
