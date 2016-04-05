@@ -1,5 +1,6 @@
 package ru.vrnsky.clinic;
 
+import ru.vrnsky.exception.UserException;
 import ru.vrnsky.io.Input;
 import ru.vrnsky.io.Output;
 
