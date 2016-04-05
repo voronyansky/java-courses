@@ -1,4 +1,4 @@
-package ru.vrnsky.clinic;
+package ru.vrnsky.exception;
 
 /**
  * Created by Egor on 03.03.2016.
