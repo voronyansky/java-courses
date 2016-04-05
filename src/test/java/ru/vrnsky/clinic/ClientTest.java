@@ -2,6 +2,7 @@ package ru.vrnsky.clinic;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import ru.vrnsky.exception.UserException;
 
 /**
  * Created with IntelliJ IDEA.
