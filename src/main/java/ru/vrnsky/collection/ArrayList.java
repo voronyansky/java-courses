@@ -10,7 +10,8 @@ import java.util.*;
  */
 public class ArrayList<T> implements List<T> {
 
-    private Object[] values;
+    private Object[] values; //Hold data
+    private int pointer; //Pointer for adding element
 
     /**
      * Create new array for holding objects
@@ -19,6 +20,7 @@ public class ArrayList<T> implements List<T> {
     public ArrayList()
     {
         values = new Object[10];
+        pointer = 0;
     }
 
     /**
@@ -101,15 +103,26 @@ public class ArrayList<T> implements List<T> {
     @Override
     public boolean add(T t) {
 
-        for(int index = 0; index < values.length; index++)
-        {
-            if(values[index] == null)
-            {
-                values[index] = t;
-                return true;
-            }
+        if(pointer >= 0 && pointer < values.length) {
+            values[pointer] = t;
+            pointer++;
         }
-        return false;
+        else
+        {
+            Object[] newArray = new Object[(values.length*3)/2+1];
+            System.arraycopy(values,0,newArray,values.length,values.length);
+
+            pointer = 0;
+            while(newArray[pointer] != null)
+            {
+                pointer++;
+            }
+            newArray[pointer] = t;
+            pointer++;
+            values = newArray;
+        }
+
+        return true;
     }
 
 
@@ -137,7 +150,6 @@ public class ArrayList<T> implements List<T> {
      */
     @Override
     public boolean containsAll(Collection<?> c) {
-
         return false;
     }
 
@@ -162,19 +174,29 @@ public class ArrayList<T> implements List<T> {
         return false;
     }
 
-    //TODO write docs
+    /**
+     * Delete all elements of arg in originally array object
+     * @param c - elements for remove
+     * @return true if success and false if elements not found
+     */
     @Override
     public boolean removeAll(Collection<?> c) {
         return false;
     }
 
-    //TODO write docs
+    /**
+     * Delete all elements which does not find at arg
+     * @param c - elements for excluding
+     * @return true if it success and false if elements not found
+     */
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
     }
 
-    //TODO write docs
+    /**
+     * Set all array cell to null object
+     */
     @Override
     public void clear() {
 
@@ -184,7 +206,11 @@ public class ArrayList<T> implements List<T> {
         }
     }
 
-    //TODO write docs
+    /**
+     * Get an element from array
+     * @param index - position at the array
+     * @return instance of T class
+     */
     @Override
     public T get(int index)
     {
@@ -194,7 +220,12 @@ public class ArrayList<T> implements List<T> {
         return (T)value;
     }
 
-    //TODO write docs
+    /**
+     * Set existing an element in index position next value element
+     * @param index - position of element in array
+     * @param element - instance of T class
+     * @return instance of T class
+     */
     @Override
     public T set(int index, T element) {
 
@@ -203,10 +234,16 @@ public class ArrayList<T> implements List<T> {
             values[index] = element;
         }
 
-        return element;
+        return get(index);
     }
 
-    //TODO write docs
+    /**
+     * Add an element at the index position
+     * If index bigger than values.length create new array and
+     * Copy old data into new array, after it put element in new array
+     * @param index
+     * @param element
+     */
     @Override
     public void add(int index, T element) {
 
@@ -223,43 +260,92 @@ public class ArrayList<T> implements List<T> {
 
     }
 
-    //TODO write docs
+    /**
+     * Remove element in array by set reference in null
+     * @param index - position at the array
+     * @return copy of deleted object
+     */
     @Override
     public T remove(int index) {
 
-        T tempClient = (T)values[index];
+        T deleteClient = (T)values[index];
         values[index] = null;
-        return tempClient;
+        return deleteClient;
     }
 
-    //TODO write docs and code
+    /**
+     * Find position of object
+     * @param o - object for search
+     * @return position of object in array
+     */
     @Override
     public int indexOf(Object o) {
-        return 0;
+
+        int position = -1;
+        for(int index = 0; index < values.length; index++)
+        {
+            if(o.equals(values[index]))
+            {
+                position = index;
+                break;
+            }
+        }
+
+        return position;
     }
 
-    //TODO write docs and code
+    /**
+     * Return last index of object
+     * @param o object for search
+     * @return last index of object
+     */
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+
+        int lastIndex = -1;
+        for(int index = 0;index < values.length; index++)
+        {
+            if(o.equals(values[index])) lastIndex = index;
+        }
+
+        return lastIndex;
     }
 
-    //TODO write docs and code
+    /**
+     * For passes through
+     * @return instance of ListIterator class
+     */
     @Override
     public ListIterator<T> listIterator() {
         return null;
     }
 
-    //TODO write docs and code
+    /**
+     * For passes through
+     * @param index someone know:)
+     * @return
+     */
     @Override
     public ListIterator<T> listIterator(int index) {
         return null;
     }
 
-    //TODO write docs and code
+    /**
+     * Create new list from fromIndex position to toIndex
+     * @param fromIndex - start for new list
+     * @param toIndex - finish for new list
+     * @return instance of list with data from old list
+     */
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        return null;
+
+        List<T> newList = new ArrayList<T>();
+        for(int index = fromIndex; fromIndex < values.length && fromIndex <= toIndex; index++)
+        {
+            newList.add((T) values[index]);
+        }
+
+        return newList;
     }
 
 
