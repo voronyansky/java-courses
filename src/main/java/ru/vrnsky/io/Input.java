@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by Egor on 25.03.2016.
+ * Helper class for entering data
  */
 public class Input implements In {
 
