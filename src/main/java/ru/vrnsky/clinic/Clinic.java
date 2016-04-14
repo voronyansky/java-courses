@@ -1,8 +1,11 @@
 package ru.vrnsky.clinic;
 
+import ru.vrnsky.collection.ArrayList;
 import ru.vrnsky.exception.UserException;
 import ru.vrnsky.io.Input;
 import ru.vrnsky.io.Output;
+
+import java.util.List;
 
 
 /**
@@ -13,7 +16,7 @@ import ru.vrnsky.io.Output;
  */
 public class Clinic {
 
-    private Client[] clients; //In this array hold all clients
+    private List<Client> clients; //In this array hold all clients
     private Output output = new Output();
     private Input input = new Input();
 
@@ -24,7 +27,7 @@ public class Clinic {
      */
     public Clinic(int client)
     {
-        clients = new Client[client];
+        clients = new ArrayList<Client>();
     }
 
     /**
@@ -33,25 +36,27 @@ public class Clinic {
      */
     public void getTableClinic()
     {
-        //StringBuilder stringBuilder = new StringBuilder();
-        String str;
+        String str = "str";
         output.sayUser("id\tName\tPet");
         if(clients != null)
         {
-            for(int i=0;i<clients.length;i++)
+            for(int i=0;i<clients.size();i++)
             {
-                if(clients[i] != null)
+                Client client = clients.get(i);
+                if (client != null)
                 {
-                    if(clients[i].getPet() != null)
+                    if (client.getPet() != null)
                     {
-                        str = i + "\t" + clients[i].getName() + "\t" + clients[i].getPet().getName();
+                        str = i + "\t" + client.getName() + "\t" + client.getPet();
+                        System.out.println(str);
                     }
                     else
                     {
-                        str = i + "\t" + clients[i].getName() + "\t" + "no pet yet";
+                        str = i + "\t" + client.getName() + "\t" + "NO PETS";
+                        System.out.println(str);
                     }
-                    output.sayUser(str);
                 }
+
 
             }
         }
@@ -71,8 +76,8 @@ public class Clinic {
 
         output.sayUser("Type id of client");
         int id = input.getInt();
-        if(id < 0 || id > clients.length) throw new UserException("Id out of range");
-        return clients[id];
+        if(id < 0 || id > clients.size()) throw new UserException("Id out of range");
+        return clients.get(id);
     }
 
     /**
@@ -83,9 +88,9 @@ public class Clinic {
         output.sayUser("Enter a name of pet for search");
         String petName = input.getString();
         Client client;
-        for(int i=0;i<clients.length;i++)
+        for(int i=0;i<clients.size();i++)
         {
-            client = clients[i];
+            client = clients.get(i);
             //Check for client not null
             if(client != null)
             {
@@ -115,9 +120,9 @@ public class Clinic {
         output.sayUser("Enter a name for search client(s)");
         String clientName = input.getString();  //Reading from console
         Client client;
-        for(int i=0;i<clients.length;i++)
+        for(int i=0;i<clients.size();i++)
         {
-            client = clients[i];
+            client = clients.get(i);
             //Search client with name and type it in console
             if(client != null && client.getName().equalsIgnoreCase(clientName))
                 output.sayUser(i + " " + client.getName());
@@ -154,14 +159,7 @@ public class Clinic {
         String name = input.getString();
         if(name.isEmpty()) throw new UserException("User must have name");
         Client client = new Client(name);
-        for(int i=0;i<clients.length;i++)
-        {
-            if(clients[i] == null)
-            {
-                clients[i] = client;
-                break;
-            }
-        }
+        clients.add(client);
     }
 
     /**
@@ -205,8 +203,8 @@ public class Clinic {
         getTableClinic();
         output.sayUser("Type id of client which you would to delete");
         int id = input.getInt();
-        if(id < 0 || id > clients.length) throw new UserException("Id out of range");
-        clients[id] = null;
+        if(id < 0 || id > clients.size()) throw new UserException("Id out of range");
+        clients.set(id,null);
     }
 
     /**
@@ -216,7 +214,7 @@ public class Clinic {
      */
     public Pet getClientsPet(int clientId)
     {
-        return clients[clientId].getPet();
+        return clients.get(clientId).getPet();
     }
 
     /**
