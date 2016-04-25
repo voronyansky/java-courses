@@ -16,6 +16,10 @@ public class Input implements In {
         reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    /**
+     * This method read data from console and return it
+     * @return string from console
+     */
     public String getString() {
         String data = "null";
         try
@@ -30,6 +34,10 @@ public class Input implements In {
         return data;
     }
 
+    /**
+     * This method get integer from user and return it
+     * @return number from console
+     */
     public int getInt() {
         int number = -1;
         try
