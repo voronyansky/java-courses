@@ -1,7 +1,6 @@
 # java-courses
 #### Clinic System
 This is system for pet clinic.
-#### Changelog 28.03.2016
 Fixed:
 - Now it is no important would you work with existing client or create new client
 Most important features at this system:
